@@ -6,6 +6,7 @@ import DashBoard from "../pages/DashBoard";
 import Settings from "../pages/Settings";
 import Login from "../pages/Login";
 import ProductListing from "../pages/ProductListing";
+import Products from "../pages/Products";
 
 const AllRoutes = () => {
   const allRoutes = useRoutes([
@@ -22,6 +23,7 @@ const AllRoutes = () => {
     },
     { path: "/login", element: <Login /> },
     { path: "/product-listing/:id/:id1", element: <ProductListing /> },
+    { path: "/products", element: <Products /> },
   ]);
   return allRoutes;
 };
