@@ -1,8 +1,11 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuthStore } from "@/zustand/useAuthStore";
 import { Search, ShoppingCart, UserCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
+  const { user, loginWithGoogle, logout } = useAuthStore();
   return (
     <div>
       <nav className="bg-white border-b shadow-sm px-6 py-4 flex justify-between items-">
@@ -31,9 +34,30 @@ const Navigation = () => {
               2
             </span>
           </Link>
-          <Link to={"/dashboard"}>
-            <UserCircle />
-          </Link>
+
+          {user ? (
+            <>
+              <Button variant={"outline"} onClick={logout}>
+                Logout
+              </Button>
+              <Link to={"/dashboard"}>
+                <UserCircle />
+              </Link>
+            </>
+          ) : (
+            <>
+              <Button variant={"outline"} onClick={loginWithGoogle}>
+                Login with Google
+              </Button>
+              <Link to={"/login"}>
+                <Button variant={"secondary"}>Login With Email</Button>
+              </Link>
+
+              <Link to={"/signup"}>
+                <Button variant={"secondary"}>Sign Up</Button>
+              </Link>
+            </>
+          )}
         </div>
       </nav>
     </div>
