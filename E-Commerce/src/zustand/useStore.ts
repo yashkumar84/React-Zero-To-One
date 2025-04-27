@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 
-interface Product {
+export interface Product {
   id: number;
   title: string;
   price: number;
@@ -25,4 +25,6 @@ export const useStore = create<StoreState>((set, get) => ({
   },
 
   getProductById: (id) => get().products.find((product) => product.id === id),
+
+  
 }));

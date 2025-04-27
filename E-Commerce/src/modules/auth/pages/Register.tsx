@@ -12,7 +12,7 @@ const Register = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     await registerWithEmail(email, password);
-    navigate("/dashboard");
+    navigate("/");
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">

@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuthStore } from "@/zustand/useAuthStore";
+import { useCartStore } from "@/zustand/useCartStore";
 import { Search, ShoppingCart, UserCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
   const { user, loginWithGoogle, logout } = useAuthStore();
+  const { items } = useCartStore();
   return (
     <div>
       <nav className="bg-white border-b shadow-sm px-6 py-4 flex justify-between items-">
@@ -31,7 +33,7 @@ const Navigation = () => {
           <Link to={"/cart"} className="relative">
             <ShoppingCart />
             <span className="absolute -top-2 -right-2 text-xs bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center">
-              2
+              {items.length}
             </span>
           </Link>
 

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/zustand/useCartStore";
 import { useStore } from "@/zustand/useStore";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -10,6 +11,7 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const productId = Number(id);
   const product = getProductById(productId);
+  const { addToCart } = useCartStore();
 
   useEffect(() => {
     if (!product) {
@@ -50,6 +52,7 @@ const ProductPage = () => {
             <Button
               size="lg"
               className="w-full bg-blue-600 hover:bg-blue-700 text-white mt-6"
+              onClick={() => addToCart(product)}
             >
               Add To Cart
             </Button>

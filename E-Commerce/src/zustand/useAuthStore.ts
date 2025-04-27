@@ -8,6 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, googleProvider } from "@/config/firebase";
+import { toast } from "sonner";
 
 interface AuthState {
   user: User | null;
@@ -31,8 +32,10 @@ export const useAuthStore = create<AuthState>((set) => {
       try {
         const result = await signInWithPopup(auth, googleProvider);
         set({ user: result.user });
+        toast.success("Logged in SuccessFully");
       } catch (error) {
         console.error("Google Login error: ", error);
+        toast.error("Google Login Error");
       }
     },
 
@@ -40,7 +43,9 @@ export const useAuthStore = create<AuthState>((set) => {
       try {
         const result = await signInWithEmailAndPassword(auth, email, password);
         set({ user: result.user });
+        toast.success("Logged in SuccessFully");
       } catch (error) {
+        toast.error("Email Login Error");
         console.error("Error in the Email Login : ", error);
       }
     },
@@ -53,7 +58,9 @@ export const useAuthStore = create<AuthState>((set) => {
           password
         );
         set({ user: result.user });
+        toast.success("Registered SuccessFully");
       } catch (error) {
+        toast.error("Register Error");
         console.error("Register Error : ", error);
       }
     },
@@ -62,7 +69,9 @@ export const useAuthStore = create<AuthState>((set) => {
       try {
         await signOut(auth);
         set({ user: null });
+        toast.success("Logged Out SuccessFully");
       } catch (error) {
+        toast.error("Error While Logout");
         console.error("Logout Error : ", error);
       }
     },

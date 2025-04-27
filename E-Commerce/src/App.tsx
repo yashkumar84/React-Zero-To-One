@@ -1,3 +1,4 @@
+import { Toaster } from "./components/ui/sonner";
 import AllRoutes from "./routes/AllRoutes";
 import Navigation from "./shared/components/Navigation";
 
@@ -6,6 +7,7 @@ function App() {
     <>
       <Navigation />
       <AllRoutes />
+      <Toaster position="top-right" richColors />
     </>
   );
 }

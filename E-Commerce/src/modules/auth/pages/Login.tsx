@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     await loginWithEmail(email, password);
-    navigate("/dashboard");
+    navigate("/");
   };
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4">
