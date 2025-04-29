@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { initiateRazorpayPayment } from "@/utils/razorpay";
+import { useAuthStore } from "@/zustand/useAuthStore";
 import { useCartStore } from "@/zustand/useCartStore";
 import { useStore } from "@/zustand/useStore";
 import { useEffect, useState } from "react";
@@ -11,7 +13,14 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const productId = Number(id);
   const product = getProductById(productId);
+  const { user } = useAuthStore();
   const { addToCart } = useCartStore();
+
+  const handleCheckout = (price: number) => {
+    if (!user) return alert("Login Required For Payment");
+
+    initiateRazorpayPayment(price, "Yash", "yash@gmail.com");
+  };
 
   useEffect(() => {
     if (!product) {
@@ -56,7 +65,14 @@ const ProductPage = () => {
             >
               Add To Cart
             </Button>
-            <Button size={"lg"} variant={"outline"} className="w-full">
+            <Button
+              size={"lg"}
+              variant={"outline"}
+              className="w-full"
+              onClick={() =>
+                handleCheckout(Number((product.price * 85).toFixed(0)))
+              }
+            >
               Buy Now
             </Button>
           </div>

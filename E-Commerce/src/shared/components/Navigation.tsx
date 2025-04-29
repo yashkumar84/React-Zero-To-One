@@ -2,12 +2,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuthStore } from "@/zustand/useAuthStore";
 import { useCartStore } from "@/zustand/useCartStore";
+import { useStore } from "@/zustand/useStore";
 import { Search, ShoppingCart, UserCircle } from "lucide-react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const { user, loginWithGoogle, logout } = useAuthStore();
   const { items } = useCartStore();
+  const { searchQuery, setSearchQuery } = useStore();
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate("/search");
+  };
+
   return (
     <div>
       <nav className="bg-white border-b shadow-sm px-6 py-4 flex justify-between items-">
@@ -21,11 +31,15 @@ const Navigation = () => {
               className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
               size={18}
             />
-            <Input
-              type="text"
-              placeholder="Search For Products"
-              className="pl-10 pr-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <form onSubmit={handleSearch}>
+              <Input
+                type="text"
+                placeholder="Search For Products"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-4 py-2 rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </form>
           </div>
         </div>
 
@@ -55,7 +69,7 @@ const Navigation = () => {
                 <Button variant={"secondary"}>Login With Email</Button>
               </Link>
 
-              <Link to={"/signup"}>
+              <Link to={"/register"}>
                 <Button variant={"secondary"}>Sign Up</Button>
               </Link>
             </>

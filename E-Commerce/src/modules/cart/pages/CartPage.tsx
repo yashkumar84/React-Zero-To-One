@@ -1,15 +1,24 @@
 import { Button } from "@/components/ui/button";
+import { initiateRazorpayPayment } from "@/utils/razorpay";
+import { useAuthStore } from "@/zustand/useAuthStore";
 import { useCartStore } from "@/zustand/useCartStore";
 import { useNavigate } from "react-router-dom";
 
 const CartPage = () => {
   const { items, removeFromCart, clearCart } = useCartStore();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
 
   const totalPrice = items.reduce(
     (acc, item) => acc + Number((item.price * 85).toFixed(0)) * item.quantity,
     0
   );
+
+  const handleCheckout = () => {
+    if (!user) return alert("Login Required For Payment");
+
+    initiateRazorpayPayment(totalPrice, "Yash", "yash@gmail.com");
+  };
 
   if (items.length == 0) {
     return (
@@ -56,6 +65,9 @@ const CartPage = () => {
         <h3 className="text-2xl font-bold ">Total :₹{totalPrice} </h3>
         <Button variant={"outline"} onClick={clearCart}>
           Clear Cart
+        </Button>
+        <Button variant={"outline"} onClick={handleCheckout}>
+          Checkout
         </Button>
       </div>
     </div>
